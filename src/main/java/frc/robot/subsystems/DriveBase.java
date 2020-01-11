@@ -20,10 +20,10 @@ import frc.robot.Robot;
  * Add your docs here.
  */
 public class DriveBase extends Subsystem {
-  public TalonSRX frontLeftDrive;
-  public TalonSRX frontRightDrive;
-  public VictorSPX backLeftDrive;
-  public VictorSPX backRightDrive;
+  public TalonSRX frontLeftDrive;//Front Left Motor
+  public TalonSRX frontRightDrive;//Front Right Motor
+  public VictorSPX backLeftDrive;//Back Left Motor
+  public VictorSPX backRightDrive;//Back Right Motor
   public double peak;
   public DriveBase()
 {
@@ -44,6 +44,13 @@ public class DriveBase extends Subsystem {
 public void move(double speedL,double speedR){
   frontLeftDrive.set(ControlMode.PercentOutput,speedL);
   frontRightDrive.set(ControlMode.PercentOutput,speedR);
+}
+public void setMotors(double nPeak)
+{
+  Robot.initMotor(frontLeftDrive, nPeak);
+  Robot.initMotor(frontRightDrive, nPeak);
+  Robot.initMotor(backLeftDrive, nPeak);
+  Robot.initMotor(backRightDrive, nPeak);
 }
   // Put methods for controlling this subsystem
   // here. Call these from Commands.

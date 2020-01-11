@@ -7,15 +7,17 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
+import frc.robot.commands.Drive;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -30,6 +32,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static DriveBase drivebase;
+  public Drive drive;
   public static OI m_oi;
 
 
@@ -43,6 +46,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     drivebase = new DriveBase();
+    drive = new Drive();
     m_oi = new OI();
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -112,7 +116,11 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopInit() {
+  public void teleopInit() 
+  {
+    drive.start();
+  drivebase.setMotors(.5);
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
