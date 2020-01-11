@@ -8,12 +8,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+
 
 public class Drive extends Command {
-  public Drive() {
+  public Drive()
+  {
+    requires(Robot.drivebase);
+  }
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-  }
+  
 
   // Called just before this Command runs the first time
   @Override
@@ -23,6 +28,7 @@ public class Drive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.drivebase.move(-Robot.m_oi.CON.getRawAxis(1), -Robot.m_oi.CON.getRawAxis(3));
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,5 +46,6 @@ public class Drive extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.drivebase.move(0,0);
   }
 }

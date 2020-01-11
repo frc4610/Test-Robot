@@ -7,12 +7,17 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.ExampleSubsystem;
 
 /**
@@ -24,7 +29,9 @@ import frc.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+  public static DriveBase drivebase;
   public static OI m_oi;
+
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -35,6 +42,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    drivebase = new DriveBase();
     m_oi = new OI();
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -127,5 +135,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+  public static void initMotor(TalonSRX motor, double peak)
+  {
+    motor.configPeakOutputForward(peak);
+    motor.configPeakOutputReverse(-peak);
+    motor.setNeutralMode(NeutralMode.Brake);
+  }
+  public static void initMotor(VictorSPX motor, double peak)
+  {
+    motor.configPeakOutputForward(peak);
+    motor.configPeakOutputReverse(-peak);
+    motor.setNeutralMode(NeutralMode.Brake);
   }
 }

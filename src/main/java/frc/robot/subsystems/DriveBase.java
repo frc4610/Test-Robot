@@ -7,10 +7,14 @@
 
 package frc.robot.subsystems;
 
+
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 
 /**
  * Add your docs here.
@@ -23,11 +27,24 @@ public class DriveBase extends Subsystem {
   public double peak;
   public DriveBase()
 {
-  
-
-
+  peak = .5;
   frontLeftDrive = new TalonSRX(2);
-  
+  frontRightDrive = new TalonSRX(3);
+  backLeftDrive = new VictorSPX(0);
+  backRightDrive = new VictorSPX(1);
+  backLeftDrive.follow(frontLeftDrive);
+  backRightDrive.follow(frontRightDrive);
+  frontRightDrive.setInverted(true);
+  backRightDrive.setInverted(true);
+  Robot.initMotor(frontLeftDrive,peak);
+  Robot.initMotor(frontRightDrive,peak);
+  Robot.initMotor(backLeftDrive,peak);
+  Robot.initMotor(backRightDrive,peak);
+}
+public void move(double speedL,double speedR){
+  frontLeftDrive.set(ControlMode.PercentOutput,speedL);
+  frontRightDrive.set(ControlMode.PercentOutput,speedR);
+}
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
